@@ -232,3 +232,9 @@ create policy volumes_gestion on public.volumes for all
 
 create policy messages_lecture on public.messages for select
   using (public.est_gestionnaire() or (entreprise_id is not null and public.peut_voir_entreprise(entreprise_id)));
+
+-- Droits de table pour l'API (la RLS filtre ensuite). Nécessaire quand
+-- « Automatically expose new tables » est décoché à la création du projet.
+grant usage on schema public to anon, authenticated, service_role;
+grant select, insert, update, delete on all tables in schema public to authenticated;
+grant all on all tables in schema public to service_role;
