@@ -96,9 +96,14 @@ describe("expéditeurs", () => {
     expect(corps).toEqual({ from: "+14505550000", to: "+14505551234", text: "Bonjour" });
   });
 
-  it("signalent une configuration manquante en mode réel", async () => {
-    expect(await envoyerCourriel("a@b.ca", { sujet: "s", texte: "t", html: null }, { ENVOIS_REELS: "1" }, appelInterdit)).toMatchObject({
-      envoye: false,
+  it("gardent les courriels en mode test sans fournisseur, même en mode réel", async () => {
+    expect(await envoyerCourriel("a@b.ca", { sujet: "s", texte: "t", html: null }, { ENVOIS_REELS: "1" }, appelInterdit)).toEqual({
+      envoye: true,
+      mode: "test",
     });
+  });
+
+  it("signalent un texto impossible sans Telnyx en mode réel", async () => {
+    expect(await envoyerSms("450-555-1234", "x", { ENVOIS_REELS: "1" }, appelInterdit)).toMatchObject({ envoye: false });
   });
 });

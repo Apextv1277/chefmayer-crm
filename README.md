@@ -68,7 +68,8 @@ ce qui permet de vérifier les textes et les horaires.
 4. Compléter l'enregistrement du numéro pour les textos d'affaires si Telnyx le demande.
 
 ### 4. Courriels
-Le fournisseur n'est pas encore choisi. Le CRM est prêt pour **Resend** : faire vérifier le domaine `chefmayer.ca` chez Resend, puis
+On peut démarrer avec les textos seulement : tant que `RESEND_API_KEY` et `COURRIEL_EXPEDITEUR` sont absents, les courriels restent en
+mode test (inscrits au journal, pas envoyés), même avec `ENVOIS_REELS=1`. Le fournisseur n'est pas encore choisi. Le CRM est prêt pour **Resend** : faire vérifier le domaine `chefmayer.ca` chez Resend, puis
 ajouter `RESEND_API_KEY`, `COURRIEL_EXPEDITEUR` et `COURRIEL_REPONSE`. Pour passer à Gmail ou Outlook, seul `lib/envoi/courriel.ts`
 change.
 

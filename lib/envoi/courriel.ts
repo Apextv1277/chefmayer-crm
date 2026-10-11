@@ -20,10 +20,10 @@ export async function envoyerCourriel(
 ): Promise<ResultatEnvoi> {
   const adresse = normaliserCourriel(destinataire);
   if (!adresse) return { envoye: false, raison: "Adresse courriel invalide." };
-  if (!envoisReels(env)) return { envoye: true, mode: "test" };
-  if (!courrielConfigure(env)) {
-    return { envoye: false, raison: "L'envoi de courriels n'est pas configuré (RESEND_API_KEY, COURRIEL_EXPEDITEUR)." };
-  }
+  // Sans fournisseur configuré, les courriels restent en mode test même
+  // quand les textos partent pour vrai : on peut démarrer avec les textos
+  // seulement.
+  if (!envoisReels(env) || !courrielConfigure(env)) return { envoye: true, mode: "test" };
 
   try {
     const reponse = await requete("https://api.resend.com/emails", {
